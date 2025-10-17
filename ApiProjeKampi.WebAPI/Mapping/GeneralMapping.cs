@@ -21,5 +21,8 @@ public class GeneralMapping : Profile
         CreateMap<Message, GetByIdMessageDto>().ReverseMap();
 
         CreateMap<Product, CreateProductDto>().ReverseMap();
+        CreateMap<Product, ResultProductWithCategoryDto>()
+            .ForMember(dest=> dest.CategoryName,member=> member.MapFrom(x=> x.Category.CategoryName))
+            .ReverseMap();
     }
 }

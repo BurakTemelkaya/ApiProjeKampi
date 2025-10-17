@@ -2,7 +2,7 @@
 
 namespace ApiProjeKampi.WebAPI.Dtos.ProductDtos;
 
-public class ResultProductDto
+public class ResultProductWithCategoryDto
 {
     public int ProductId { get; set; }
     public string ProductName { get; set; }
@@ -10,5 +10,5 @@ public class ResultProductDto
     public decimal Price { get; set; }
     public string ImageUrl { get; set; }
     public int? CategoryId { get; set; }
-    public Category? Category { get; set; }
+    public string? CategoryName { get; set; }
 }

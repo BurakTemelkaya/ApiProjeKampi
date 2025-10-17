@@ -93,4 +93,13 @@ public class ProductsController : ControllerBase
         return Created(string.Empty, new { message = "Ürün işlemi başarılı.", data = product });
     }
 
+    [HttpGet("ProductListWithCategory")]
+    public async Task<IActionResult> ProductListWithCategory(CancellationToken cancellationToken = default)
+    {
+        List<Product> products = await _apiContext.Products
+            .Include(p => p.Category)
+            .ToListAsync(cancellationToken);
+        return Ok(_mapper.Map<List<ResultProductWithCategoryDto>>(products));
+    }
+
 }
