@@ -1,5 +1,6 @@
 ﻿using ApiProjeKampi.WebAPI.Dtos.FeatureDtos;
 using ApiProjeKampi.WebAPI.Dtos.MessageDtos;
+using ApiProjeKampi.WebAPI.Dtos.NotificationDtos;
 using ApiProjeKampi.WebAPI.Dtos.ProductDtos;
 using ApiProjeKampi.WebAPI.Entities;
 using AutoMapper;
@@ -24,5 +25,10 @@ public class GeneralMapping : Profile
         CreateMap<Product, ResultProductWithCategoryDto>()
             .ForMember(dest=> dest.CategoryName,member=> member.MapFrom(x=> x.Category.CategoryName))
             .ReverseMap();
+
+        CreateMap<Notification, ResultNotificationDto>().ReverseMap();
+        CreateMap<Notification, CreateNotificationDto>().ReverseMap();
+        CreateMap<Notification, UpdateNotificationDto>().ReverseMap();
+        CreateMap<Notification, GetByIdNotificationDto>().ReverseMap();
     }
 }
