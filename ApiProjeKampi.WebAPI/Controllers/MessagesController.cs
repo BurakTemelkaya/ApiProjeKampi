@@ -73,4 +73,11 @@ public class MessagesController : ControllerBase
         return Ok("Mesaj silme işlemi başarılı.");
     }
 
+    [HttpGet("MessageListByUnreadMessages")]
+    public async Task<IActionResult> MessageListByUnreadMessages()
+    {
+        List<Message> value = await _apiContext.Messages.Where(x => !x.IsRead).ToListAsync();
+
+        return Ok(_mapper.Map<List<ResultMessageDto>>(value));
+    }
 }
