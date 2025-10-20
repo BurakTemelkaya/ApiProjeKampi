@@ -1,3 +1,5 @@
+using ApiProjeKampi.WebUI.Constants.Area;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -23,7 +25,15 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapControllerRoute(
+    name: AreaNames.Admin,
+    pattern: "/admin/{controller=Home}/{action=Index}/{id?}",
+    defaults: new { area = AreaNames.Admin },
+    constraints: new { area = AreaNames.Admin }
+);
+
+app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
 
 app.Run();
