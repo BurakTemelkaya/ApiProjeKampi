@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewData["Title"] = "ProductList";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+    int count = 0;
+}
+
+@model List<ResultProductDto>
+
+<div class="row">
+    <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4>Ürün Listesi Yönetimi</h4>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Ürün Adı</th>
+                            <th scope="col">Ürün Fiyatı</th>
+                            <th scope="col">Sil</th>
+                            <th scope="col">Güncelle</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var product in Model)
+                        {
+                            count++;
+                            <tr>
+                                <th scope="row">@count</th>
+                                <td>@product.ProductName</td>
+                                <td>@product.Price</td>
+                                <td><a asp-action="DeleteProduct" asp-controller="Product" asp-area="@AreaNames.Admin" asp-route-id="@product.ProductId" class="btn btn-danger">Sil</a></td>
+                                <td><a asp-action="UpdateProduct" asp-controller="Product" asp-area="@AreaNames.Admin" asp-route-id="@product.ProductId" class="btn btn-success">Güncelle</a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <a asp-action="CreateProduct" asp-controller="Product" asp-area="@AreaNames.Admin" class="btn btn-primary">Yeni Ürün Girişi</a>
+            </div>
+        </div>
+    </div>
+</div>

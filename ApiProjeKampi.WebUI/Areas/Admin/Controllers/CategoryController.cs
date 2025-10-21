@@ -1,7 +1,6 @@
 ﻿using ApiProjeKampi.WebUI.Constants.Area;
 using ApiProjeKampi.WebUI.Dtos.CategoryDtos;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace ApiProjeKampi.WebUI.Areas.Admin.Controllers;
 
