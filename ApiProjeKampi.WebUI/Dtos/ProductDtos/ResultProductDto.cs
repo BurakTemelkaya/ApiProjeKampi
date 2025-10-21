@@ -1,4 +1,6 @@
-﻿namespace ApiProjeKampi.WebUI.Dtos.ProductDtos;
+﻿using ApiProjeKampi.WebUI.Dtos.CategoryDtos;
+
+namespace ApiProjeKampi.WebUI.Dtos.ProductDtos;
 
 public class ResultProductDto
 {
@@ -8,4 +10,5 @@ public class ResultProductDto
     public decimal Price { get; set; }
     public string ImageUrl { get; set; }
     public int? CategoryId { get; set; }
+    public string CategoryName { get; set; }
 }

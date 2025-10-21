@@ -59,7 +59,7 @@ public class MessagesController : ControllerBase
     }
 
 
-    [HttpDelete]
+    [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeleteMessage(int id, CancellationToken cancellationToken = default)
     {
         Message? message = await _apiContext.Messages.FindAsync(id, cancellationToken);

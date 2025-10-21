@@ -69,7 +69,7 @@ public class ProductsController : ControllerBase
         return Ok("Ürün güncelleme işlemi başarılı.");
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeleteProduct(int id, CancellationToken cancellationToken = default)
     {
         var product = await _apiContext.Products.FindAsync(id, cancellationToken);

@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewData["Title"] = "FeatureList";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+    int count = 0;
+}
+
+@model List<ResultFeatureDto>
+
+<div class="row">
+    <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4>Öne Çıkan Alan İşlemleri</h4>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Başlık</th>
+                            <th scope="col">Alt Başlık</th>
+                            <th scope="col">Açıklama</th>
+                            <th scope="col">Sil</th>
+                            <th scope="col">Güncelle</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var feature in Model)
+                        {
+                            count++;
+                            <tr>
+                                <th scope="row">@count</th>
+                                <td>@feature.Title</td>
+                                <td>@feature.SubTitle</td>
+                                <td>@feature.Description</td>
+                                <td><a asp-action="DeleteFeature" asp-controller="Feature" asp-area="@AreaNames.Admin" asp-route-id="@feature.FeatureId" class="btn btn-danger">Sil</a></td>
+                                <td><a asp-action="UpdateFeature" asp-controller="Feature" asp-area="@AreaNames.Admin" asp-route-id="@feature.FeatureId" class="btn btn-success">Güncelle</a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                @if (Model.Count == 0)
+                {
+                    <a asp-action="CreateFeature" asp-controller="Feature" asp-area="@AreaNames.Admin" class="btn btn-primary">Yeni Öne Çıkan Alan Girişi</a>
+                }
+                else
+                {
+                    <p>Yeni Öne Çıkan Alan Ekleyemezsiniz. Mevcut Alanı Güncelleyebilirsiniz.</p>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>

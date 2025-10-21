@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewData["Title"] = "CreateFeature";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+@model CreateFeatureDto
+
+<div class="row">
+    <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <h4>Yeni Ürün Ekleme Sayfası</h4>
+
+                <form method="post">
+                    <div class="form-group">
+                        <label>Başlık</label>
+                        <input type="text" asp-for="Title" class="form-control" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Alt Başlık</label>
+                        <input type="text" asp-for="SubTitle" class="form-control" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Görsel URL</label>
+                        <input type="text" asp-for="ImageUrl" class="form-control" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Video Linki</label>
+                        <input type="url" asp-for="VideoUrl" class="form-control" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Açıklama</label>
+                        <textarea class="form-control" asp-for="Description" rows="5"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary mt-3">Öne Çıkan Alan Oluştur</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

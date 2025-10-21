@@ -56,7 +56,7 @@ public class FeaturesController : ControllerBase
         return Ok("Güncelleme işlemi başarılı.");
     }
 
-    [HttpDelete]
+    [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeleteFeature(int id, CancellationToken cancellationToken = default)
     {
         Feature? feature = await _apiContext.Features.FindAsync(id, cancellationToken);

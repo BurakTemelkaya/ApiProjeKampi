@@ -20,7 +20,7 @@ public class ProductController : Controller
     public async Task<IActionResult> ProductList()
     {
         HttpClient client = _httpClientFactory.CreateClient();
-        HttpResponseMessage responseMessage = await client.GetAsync("https://localhost:7051/api/Products");
+        HttpResponseMessage responseMessage = await client.GetAsync("https://localhost:7051/api/Products/ProductListWithCategory");
         if (responseMessage.IsSuccessStatusCode)
         {
             List<ResultProductDto>? data = await responseMessage.Content.ReadFromJsonAsync<List<ResultProductDto>>();
@@ -77,6 +77,14 @@ public class ProductController : Controller
         HttpResponseMessage responseMessage = await client.GetAsync($"https://localhost:7051/api/Products/GetProduct/{id}");
         if (responseMessage.IsSuccessStatusCode)
         {
+            HttpResponseMessage categoriesResponse = await client.GetAsync("https://localhost:7051/api/Categories");
+
+            var categories = await categoriesResponse.Content.ReadFromJsonAsync<List<ResultCategoryDto>>();
+
+            SelectList categorySelectList = new(categories, nameof(ResultCategoryDto.CategoryId), nameof(ResultCategoryDto.CategoryName));
+
+            ViewBag.Categories = categorySelectList;
+
             GetProductByIdDto? data = await responseMessage.Content.ReadFromJsonAsync<GetProductByIdDto>();
             return View(data);
         }

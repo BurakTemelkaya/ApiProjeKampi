@@ -56,7 +56,7 @@ public class NotificationsController : ControllerBase
         return Ok("Güncelleme işlemi başarılı.");
     }
 
-    [HttpDelete]
+    [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeleteNotification(int id, CancellationToken cancellationToken = default)
     {
         Notification? notification = await _apiContext.Notifications.FindAsync(id, cancellationToken);
