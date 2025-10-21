@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewData["Title"] = "AboutList";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+@model List<ResultAboutDto>
+
+<div class="row">
+    <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4>Hakkımda Sayfası Listesi</h4>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Başlık</th>
+                            <th scope="col">Açıklama</th>
+                            <th scope="col">Sil</th>
+                            <th scope="col">Güncelle</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (ResultAboutDto About in Model)
+                        {
+                            <tr>
+                                <td>@About.Title</td>
+                                <td>@About.Description</td>
+                                <td><a asp-action="DeleteAbout" asp-controller="About" asp-area="@AreaNames.Admin" asp-route-id="@About.AboutId" class="btn btn-danger">Sil</a></td>
+                                <td><a asp-action="UpdateAbout" asp-controller="About" asp-area="@AreaNames.Admin" asp-route-id="@About.AboutId" class="btn btn-success">Güncelle</a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                @if (Model.Count == 0)
+                {
+                    <a asp-action="CreateAbout" asp-controller="About" asp-area="@AreaNames.Admin" class="btn btn-primary">Yeni Hakkında Alanı Girişi</a>
+                }
+                else
+                {
+                    <p>Hakkında alanı zaten mevcut. Sadece mevcut alanı güncelleyebilirsiniz.</p>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>

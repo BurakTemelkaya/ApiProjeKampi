@@ -24,7 +24,10 @@ public class CategoriesController : ControllerBase
     public async Task<IActionResult> CategoryList(CancellationToken cancellationToken = default)
     {
         List<Category> categories = await _context.Categories.ToListAsync(cancellationToken);
-        return Ok(categories);
+
+        List<ResultCategoryDto> categoryDtos = _mapper.Map<List<ResultCategoryDto>>(categories);
+
+        return Ok(categoryDtos);
     }
 
     [HttpGet("GetById/{id:int}")]
@@ -35,7 +38,10 @@ public class CategoriesController : ControllerBase
         {
             return NotFound();
         }
-        return Ok(category);
+
+        ResultCategoryDto categoryDto = _mapper.Map<ResultCategoryDto>(category);
+
+        return Ok(categoryDto);
     }
 
     [HttpPost]

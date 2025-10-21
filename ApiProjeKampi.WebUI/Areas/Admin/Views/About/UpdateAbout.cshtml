@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewData["Title"] = "UpdateAbout";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+@model GetAboutByIdDto
+
+<div class="row">
+    <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <h4>Hakkımda Alanı Güncelleme Sayfası</h4>
+
+                <form method="post">
+                    <input type="hidden" asp-for="AboutId" />
+                    <div class="form-group">
+                        <label>Başlık</label>
+                        <input asp-for="Title" class="form-control" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Reservasyon Numarası</label>
+                        <input type="text" asp-for="ReservationNumber" class="form-control" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Görsel URL</label>
+                        <input type="text" asp-for="ImageUrl" class="form-control" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Video Görsel URL</label>
+                        <input type="text" asp-for="VideoCoverImageUrl" class="form-control" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Video Linki (Embed Olarak)</label>
+                        <input type="url" asp-for="VideoUrl" class="form-control" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Açıklama</label>
+                        <textarea asp-for="Description" class="form-control" rows="5"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-success mt-3">Hakkımda Alanını Güncelle</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
