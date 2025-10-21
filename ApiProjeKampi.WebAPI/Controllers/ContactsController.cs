@@ -1,10 +1,8 @@
 ﻿using ApiProjeKampi.WebAPI.Context;
 using ApiProjeKampi.WebAPI.Dtos.ContactDtos;
 using ApiProjeKampi.WebAPI.Entities;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
 
 namespace ApiProjeKampi.WebAPI.Controllers;
 
@@ -34,7 +32,7 @@ public class ContactsController : ControllerBase
         }));
     }
 
-    [HttpGet("GetContact{id:int}")]
+    [HttpGet("GetContact/{id:int}")]
     public async Task<IActionResult> GetContactById(int id, CancellationToken cancellationToken = default)
     {
         Contact? contact = await _apiContext.Contacts.FindAsync(id, cancellationToken);

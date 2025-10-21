@@ -23,7 +23,7 @@ public class YummyEventsController : ControllerBase
         return Ok(YummyEvents);
     }
 
-    [HttpGet("GetYummyEvent{id:int}")]
+    [HttpGet("GetYummyEvent/{id:int}")]
     public async Task<IActionResult> GetYummyEventById(int id, CancellationToken cancellationToken = default)
     {
         YummyEvent? YummyEvent = await _context.YummyEvents.FindAsync(id, cancellationToken);

@@ -1,6 +1,5 @@
 ﻿using ApiProjeKampi.WebAPI.Context;
 using ApiProjeKampi.WebAPI.Entities;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,7 +23,7 @@ public class ChefsController : ControllerBase
         return Ok(chefs);
     }
 
-    [HttpGet("GetChef{id:int}")]
+    [HttpGet("GetChef/{id:int}")]
     public async Task<IActionResult> GetChefById(int id, CancellationToken cancellationToken = default)
     {
         Chef? chef = await _context.Chefs.FindAsync(id, cancellationToken);

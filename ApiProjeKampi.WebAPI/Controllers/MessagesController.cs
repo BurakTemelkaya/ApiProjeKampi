@@ -4,7 +4,6 @@ using ApiProjeKampi.WebAPI.Entities;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
 
 namespace ApiProjeKampi.WebAPI.Controllers;
 
@@ -28,7 +27,7 @@ public class MessagesController : ControllerBase
         return Ok(_mapper.Map<List<ResultMessageDto>>(value));
     }
 
-    [HttpGet("GetMessage{id:int}")]
+    [HttpGet("GetMessage/{id:int}")]
     public async Task<IActionResult> GetMessage(int id, CancellationToken cancellationToken = default)
     {
         Message? message = await _apiContext.Messages.FindAsync(id, cancellationToken);

@@ -5,7 +5,6 @@ using AutoMapper;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
 
 namespace ApiProjeKampi.WebAPI.Controllers;
 
@@ -31,7 +30,7 @@ public class ProductsController : ControllerBase
         return Ok(products);
     }
 
-    [HttpGet("GetProduct{id:int}")]
+    [HttpGet("GetProduct/{id:int}")]
     public async Task<IActionResult> GetProduct(int id, CancellationToken cancellationToken = default)
     {
         Product? product = await _apiContext.Products.FindAsync(id, cancellationToken);

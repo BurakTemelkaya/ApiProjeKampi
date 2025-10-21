@@ -27,7 +27,7 @@ public class NotificationsController : ControllerBase
         return Ok(_mapper.Map<List<ResultNotificationDto>>(notifications));
     }
 
-    [HttpGet("GetNotification{id:int}")]
+    [HttpGet("GetNotification/{id:int}")]
     public async Task<IActionResult> GetNotification(int id, CancellationToken cancellationToken = default)
     {
         Notification? notification = await _apiContext.Notifications.FindAsync(id, cancellationToken);

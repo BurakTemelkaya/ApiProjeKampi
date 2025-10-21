@@ -1,5 +1,7 @@
 ﻿using ApiProjeKampi.WebAPI.Context;
+using ApiProjeKampi.WebAPI.Dtos.CategoryDtos;
 using ApiProjeKampi.WebAPI.Entities;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,10 +12,12 @@ namespace ApiProjeKampi.WebAPI.Controllers;
 public class CategoriesController : ControllerBase
 {
     private readonly ApiContext _context;
+    private readonly IMapper _mapper;
 
-    public CategoriesController(ApiContext context)
+    public CategoriesController(ApiContext context,IMapper mapper)
     {
         _context = context;
+        _mapper = mapper;
     }
 
     [HttpGet]
@@ -23,7 +27,7 @@ public class CategoriesController : ControllerBase
         return Ok(categories);
     }
 
-    [HttpGet("GetById{id:int}")]
+    [HttpGet("GetById/{id:int}")]
     public async Task<IActionResult> GetCategoryById(int id, CancellationToken cancellationToken = default)
     {
         Category? category = await _context.Categories.FindAsync(id, cancellationToken);
@@ -35,8 +39,9 @@ public class CategoriesController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> AddCategory(Category category, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> AddCategory(CreateCategoryDto createCategoryDto, CancellationToken cancellationToken = default)
     {
+        Category category = _mapper.Map<Category>(createCategoryDto);
         await _context.Categories.AddAsync(category, cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);
 
@@ -57,8 +62,9 @@ public class CategoriesController : ControllerBase
     }
 
     [HttpPut]
-    public async Task<IActionResult> UpdateCategory(Category category, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> UpdateCategory(UpdateCategoryDto updateCategoryDto, CancellationToken cancellationToken = default)
     {
+        Category category = _mapper.Map<Category>(updateCategoryDto);
         _context.Categories.Update(category);
         await _context.SaveChangesAsync(cancellationToken);
         return Ok("Kategori Güncelleme İşlemi Başarılı.");

@@ -23,7 +23,7 @@ public class ServicesController : ControllerBase
         return Ok(Services);
     }
 
-    [HttpGet("GetById{id:int}")]
+    [HttpGet("GetById/{id:int}")]
     public async Task<IActionResult> GetServiceById(int id, CancellationToken cancellationToken = default)
     {
         Service? Service = await _context.Services.FindAsync(id, cancellationToken);

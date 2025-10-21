@@ -23,7 +23,7 @@ public class TestimonialsController : ControllerBase
         return Ok(Testimonials);
     }
 
-    [HttpGet("GetById{id:int}")]
+    [HttpGet("GetById/{id:int}")]
     public async Task<IActionResult> GetTestimonialById(int id, CancellationToken cancellationToken = default)
     {
         Testimonial? Testimonial = await _context.Testimonials.FindAsync(id, cancellationToken);

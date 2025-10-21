@@ -2,10 +2,8 @@
 using ApiProjeKampi.WebAPI.Dtos.FeatureDtos;
 using ApiProjeKampi.WebAPI.Entities;
 using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
 
 namespace ApiProjeKampi.WebAPI.Controllers;
 
@@ -29,7 +27,7 @@ public class FeaturesController : ControllerBase
         return Ok(_mapper.Map<List<ResultFeatureDto>>(features));
     }
 
-    [HttpGet("GetFeature{id:int}")]
+    [HttpGet("GetFeature/{id:int}")]
     public async Task<IActionResult> GetFeature(int id, CancellationToken cancellationToken = default)
     {
         Feature? feature = await _apiContext.Features.FindAsync(id, cancellationToken);
