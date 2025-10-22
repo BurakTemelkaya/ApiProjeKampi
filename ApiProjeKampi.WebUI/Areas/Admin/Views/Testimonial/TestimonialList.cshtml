@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewData["Title"] = "TestimonialList";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+    int count = 0;
+}
+
+@model List<ResultTestimonialDto>
+
+<div class="row">
+    <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4>Müşteri Yorumları Listesi</h4>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Müşteri Adı</th>
+                            <th scope="col">Müşteri Ünvanı</th>
+                            <th scope="col">Müşteri Yorumu</th>
+                            <th scope="col">Sil</th>
+                            <th scope="col">Güncelle</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (ResultTestimonialDto testimonial in Model)
+                        {
+                            count++;
+                            <tr>
+                                <th scope="row">@count</th>
+                                <td>@testimonial.NameSurname</td>
+                                <td>@testimonial.Title</td>
+                                <td>@testimonial.Comment</td>
+                                <td><a asp-action="DeleteTestimonial" asp-controller="Testimonial" asp-area="@AreaNames.Admin" asp-route-id="@testimonial.TestimonialId" class="btn btn-danger">Sil</a></td>
+                                <td><a asp-action="UpdateTestimonial" asp-controller="Testimonial" asp-area="@AreaNames.Admin" asp-route-id="@testimonial.TestimonialId" class="btn btn-success">Güncelle</a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <a asp-action="CreateTestimonial" asp-controller="Testimonial" asp-area="@AreaNames.Admin" class="btn btn-primary">Yeni Müşteri Yorumu Girişi</a>
+            </div>
+        </div>
+    </div>
+</div>
