@@ -8,6 +8,7 @@
         <ul class="sidebar-menu">
             <li class="dropdown">
                 <a asp-action="Index" asp-controller="Default" class="nav-link"><i data-feather="home"></i><span>Siteye Yönlendir</span></a>
+
                 <a href="index.html" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
 
                 <a asp-action="CategoryList" asp-controller="Category" asp-area="@AreaNames.Admin" class="nav-link"><i data-feather="briefcase"></i><span>Kategoriler</span></a>
@@ -21,6 +22,10 @@
                 <a asp-action="WhyChooseYummyList" asp-controller="WhyChooseYummy" asp-area="@AreaNames.Admin" class="nav-link"><i data-feather="github"></i><span>Neden Yummy</span></a>
 
                 <a asp-action="TestimonialList" asp-controller="Testimonial" asp-area="@AreaNames.Admin" class="nav-link"><i data-feather="aperture"></i><span>Müşteri Yorumları</span></a>
+
+                <a asp-action="YummyEventList" asp-controller="YummyEvent" asp-area="@AreaNames.Admin" class="nav-link"><i data-feather="activity"></i><span>Etkinlikler</span></a>
+
+                <a asp-action="ChefList" asp-controller="Shef" asp-area="@AreaNames.Admin" class="nav-link"><i data-feather="users"></i><span>Şeflerimiz</span></a>
             </li>
         </ul>
     </aside>
