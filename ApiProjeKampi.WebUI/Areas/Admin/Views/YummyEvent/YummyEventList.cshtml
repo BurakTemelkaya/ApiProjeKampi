@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewData["Title"] = "YummyEventList";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+    int count = 0;
+}
+
+@model List<ResultYummyEventDto>
+
+<div class="row">
+    <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4>Etkinlik Organizasyon Listesi</h4>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Organizasyon Başlığı</th>
+                            <th scope="col">Organizasyon Açıklaması</th>
+                            <th scope="col">Organizasyon Fiyatı</th>
+                            <th scope="col">Sil</th>
+                            <th scope="col">Güncelle</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var yummyEvent in Model)
+                        {
+                            count++;
+                            <tr>
+                                <th scope="row">@count</th>
+                                <td>@yummyEvent.Title</td>
+                                <td>@yummyEvent.Description</td>
+                                <td>@yummyEvent.Price</td>
+                                <td><a asp-action="DeleteYummyEvent" asp-controller="YummyEvent" asp-area="@AreaNames.Admin" asp-route-id="@yummyEvent.YummyEventId" class="btn btn-danger">Sil</a></td>
+                                <td><a asp-action="UpdateYummyEvent" asp-controller="YummyEvent" asp-area="@AreaNames.Admin" asp-route-id="@yummyEvent.YummyEventId" class="btn btn-success">Güncelle</a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <a asp-action="CreateYummyEvent" asp-controller="YummyEvent" asp-area="@AreaNames.Admin" class="btn btn-primary">Yeni Organizasyon Girişi</a>
+            </div>
+        </div>
+    </div>
+</div>
