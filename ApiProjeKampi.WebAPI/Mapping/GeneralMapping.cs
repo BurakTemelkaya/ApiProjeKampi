@@ -1,6 +1,7 @@
 ﻿using ApiProjeKampi.WebAPI.Dtos.AboutDtos;
 using ApiProjeKampi.WebAPI.Dtos.CategoryDtos;
 using ApiProjeKampi.WebAPI.Dtos.FeatureDtos;
+using ApiProjeKampi.WebAPI.Dtos.ImageDtos;
 using ApiProjeKampi.WebAPI.Dtos.MessageDtos;
 using ApiProjeKampi.WebAPI.Dtos.NotificationDtos;
 using ApiProjeKampi.WebAPI.Dtos.ProductDtos;
@@ -48,5 +49,10 @@ public class GeneralMapping : Profile
         CreateMap<Reservation, CreateReservationDto>().ReverseMap();
         CreateMap<Reservation, UpdateReservationDto>().ReverseMap();
         CreateMap<Reservation, GetReservationByIdDto>().ReverseMap();
+
+        CreateMap<Image, ResultImageDto>().ReverseMap();
+        CreateMap<Image, CreateImageDto>().ReverseMap();
+        CreateMap<Image, UpdateImageDto>().ReverseMap();
+        CreateMap<Image, GetImageByIdDto>().ReverseMap();
     }
 }
