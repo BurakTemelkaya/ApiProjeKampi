@@ -1,6 +1,6 @@
-﻿namespace ApiProjeKampi.WebAPI.Entities;
+﻿namespace ApiProjeKampi.WebAPI.Dtos.ReservationDtos;
 
-public class Reservation
+public class ResultReservationDto
 {
     public int ReservationId { get; set; }
     public string NameSurname { get; set; }
