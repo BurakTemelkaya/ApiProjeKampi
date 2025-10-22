@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewData["Title"] = "ContactList";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+@model List<ResultContactDto>
+
+<div class="row">
+    <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4>İletişim Bilgileri Listesi</h4>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Adres</th>
+                            <th scope="col">Telefon</th>
+                            <th scope="col">E-Mail</th>
+                            <th scope="col">Açık Saatler</th>
+                            <th scope="col">Sil</th>
+                            <th scope="col">Güncelle</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var contact in Model)
+                        {
+                            <tr>
+                                <td>@contact.Address</td>
+                                <td>@contact.Phone</td>
+                                <td>@contact.Email</td>
+                                <td>@contact.WorkingHours</td>
+                                <td><a asp-action="Deletecontact" asp-controller="Contact" asp-area="@AreaNames.Admin" asp-route-id="@contact.ContactId" class="btn btn-danger">Sil</a></td>
+                                <td><a asp-action="Updatecontact" asp-controller="Contact" asp-area="@AreaNames.Admin" asp-route-id="@contact.ContactId" class="btn btn-success">Güncelle</a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                @if (Model.Count == 0)
+                {
+                    <a asp-action="CreateContact" asp-controller="Contact" asp-area="@AreaNames.Admin" class="btn btn-primary">Yeni İletişim Bilgisi Girişi</a>
+                }
+                else
+                {
+                    <p>Mevcut iletişim bilgilerinizi güncelleyebilirsiniz.</p>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
