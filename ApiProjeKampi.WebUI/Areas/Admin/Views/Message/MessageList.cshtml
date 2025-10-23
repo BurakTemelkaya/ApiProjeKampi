@@ -37,7 +37,7 @@
                                 <td>@message.Email</td>
                                 <td>@message.Subject</td>
                                 <td>@message.SendDate.ToShortDateString()</td>
-                                <td><a asp-action="OpenMessage" asp-controller="Message" asp-area="@AreaNames.Admin" asp-route-id="@message.MessageId" class="btn btn-warning">Mesajı Aç</a></td>
+                                <td><a asp-action="MessageAnswerWithOpenAI" asp-controller="Message" asp-area="@AreaNames.Admin" asp-route-id="@message.MessageId" class="btn btn-warning">Mesajı Aç</a></td>
                                 <td><a asp-action="DeleteMessage" asp-controller="Message" asp-area="@AreaNames.Admin" asp-route-id="@message.MessageId" class="btn btn-danger">Sil</a></td>
                                 <td><a asp-action="UpdateMessage" asp-controller="Message" asp-area="@AreaNames.Admin" asp-route-id="@message.MessageId" class="btn btn-success">Güncelle</a></td>
                             </tr>

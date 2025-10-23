@@ -1,6 +1,8 @@
 ﻿using ApiProjeKampi.WebUI.Constants.Area;
 using ApiProjeKampi.WebUI.Dtos.MessageDtos;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Http.Headers;
+using static ApiProjeKampi.WebUI.Areas.Admin.Controllers.AIController;
 
 namespace ApiProjeKampi.WebUI.Areas.Admin.Controllers;
 
@@ -9,10 +11,12 @@ namespace ApiProjeKampi.WebUI.Areas.Admin.Controllers;
 public class MessageController : Controller
 {
     private readonly IHttpClientFactory _httpClientFactory;
+    private readonly IConfiguration _configuration;
 
-    public MessageController(IHttpClientFactory httpClientFactory)
+    public MessageController(IHttpClientFactory httpClientFactory, IConfiguration configuration)
     {
         _httpClientFactory = httpClientFactory;
+        _configuration = configuration;
     }
 
     public async Task<IActionResult> MessageList()
@@ -84,5 +88,53 @@ public class MessageController : Controller
             }
         }
         return View(updateMessageDto);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> MessageAnswerWithOpenAI(int id, string prompt)
+    {
+        HttpClient client = _httpClientFactory.CreateClient();
+        HttpResponseMessage responseMessage = await client.GetAsync($"https://localhost:7051/api/Messages/GetMessage/{id}");
+        if (responseMessage.IsSuccessStatusCode)
+        {
+            GetMessageByIdDto? data = await responseMessage.Content.ReadFromJsonAsync<GetMessageByIdDto>();
+
+            string apiKey = _configuration["OpenRouterKey"];
+
+            if (string.IsNullOrEmpty(apiKey))
+            {
+                throw new ArgumentNullException("OpenRouterKey değeri configuration dosyasında bulunamadı.");
+            }
+
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiKey);
+
+            prompt = data.MessageDetails;
+
+            var requestData = new
+            {
+                model = "openai/gpt-oss-20b:free",
+                messages = new[]
+                {
+                new { role = "system", content = "Sen bir restoran için kullanıcıların göndermiş oldukları mesajları detaylı ve olabildiğince olumlu müşteri memnuniyeti gözeten cevaplar veren bir yapay zeka aracısın. Amacımız kullanıcı tarafından gönderilen mesajlara en olumlu ve en mantıklı cevapları sunabilmek." },
+                new { role = "user", content = prompt }
+            }
+            };
+
+            HttpResponseMessage response = await client.PostAsJsonAsync("https://openrouter.ai/api/v1/chat/completions", requestData);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var result = await response.Content.ReadFromJsonAsync<OpenAIResponse>();
+                var content = result.Choices[0].Message.Content;
+                ViewBag.AnswerAI = content;
+            }
+            else
+            {
+                ViewBag.AnswerAI = "Yapay zeka ile iletişimde bir hata oluştu." + await response.Content.ReadAsStringAsync();
+            }
+
+            return View(data);
+        }
+        return View();
     }
 }
