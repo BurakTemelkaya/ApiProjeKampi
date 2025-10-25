@@ -75,4 +75,36 @@ public class ReservationsController : ControllerBase
         await _context.SaveChangesAsync(cancellationToken);
         return Ok("Reservasyon Güncelleme İşlemi Başarılı.");
     }
+
+    [HttpGet("GetTotalReservationCount")]
+    public async Task<IActionResult> GetTotalReservationCount(CancellationToken cancellationToken = default)
+    {
+        int totalReservations = await _context.Reservations.CountAsync(cancellationToken);
+
+        return Ok(totalReservations);
+    }
+
+    [HttpGet("GetTotalCustomerCount")]
+    public async Task<IActionResult> GetTotalCustomerCount(CancellationToken cancellationToken = default)
+    {
+        int totalReservations = await _context.Reservations.SumAsync(x => x.CountOfPeople, cancellationToken);
+
+        return Ok(totalReservations);
+    }
+
+    [HttpGet("GetPendingReservation")]
+    public async Task<IActionResult> GetPendingReservation(CancellationToken cancellationToken = default)
+    {
+        int totalReservations = await _context.Reservations.CountAsync(x => x.ReservationStatus == "Onay Bekliyor", cancellationToken);
+
+        return Ok(totalReservations);   
+    }
+
+    [HttpGet("GetApprovedReservation")]
+    public async Task<IActionResult> GetApprovedReservation(CancellationToken cancellationToken = default)
+    {
+        int totalReservations = await _context.Reservations.CountAsync(x => x.ReservationStatus == "Onaylandı", cancellationToken);
+
+        return Ok(totalReservations);
+    }
 }
