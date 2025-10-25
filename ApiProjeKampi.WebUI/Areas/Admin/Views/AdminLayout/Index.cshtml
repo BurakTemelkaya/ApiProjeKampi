@@ -15,9 +15,9 @@
 
             @await Component.InvokeAsync("_NavbarAdminLayoutComponentPartial")
 
-            @await Component.InvokeAsync("_SidebarAdminLayoutComponentPartial")            
-            
-            
+            @await Component.InvokeAsync("_SidebarAdminLayoutComponentPartial")
+
+
             <!-- Main Content -->
             <div class="main-content">
                 <section class="section">
@@ -46,6 +46,5 @@
     <script src="~/otika-bootstrap-admin-template/assets/js/custom.js"></script>
 </body>
 
-
-<!-- basic-table.html  21 Nov 2019 03:55:20 GMT -->
+@await RenderSectionAsync("Scripts", required: false)
 </html>
