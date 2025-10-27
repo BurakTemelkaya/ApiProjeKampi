@@ -1,19 +1,24 @@
-﻿using ApiProjeKampi.WebUI.Areas.Admin.Models;
+﻿using ApiProjeKampi.WebUI.Dtos.ReservationDtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApiProjeKampi.WebUI.Areas.Admin.ViewComponents.DashboardViewComponents;
 
 public class _DashboardMainChartComponentPartial : ViewComponent
 {
-    public IViewComponentResult Invoke()
-    {
-        RevenueChartViewModel vm = new()
-        {
-            Labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-            Income = [5, 15, 14, 36, 32, 32],
-            Expense = [7, 11, 30, 18, 25, 13],
-        };
+    private readonly IHttpClientFactory _httpClientFactory;
 
-        return View(vm);
+    public _DashboardMainChartComponentPartial(IHttpClientFactory httpClientFactory)
+    {
+        _httpClientFactory = httpClientFactory;
+    }
+
+    public async Task<IViewComponentResult> InvokeAsync(CancellationToken cancellationToken = default)
+    {
+        HttpClient client = _httpClientFactory.CreateClient();
+        client.BaseAddress = new Uri("https://localhost:7051");
+
+        List<ReservationChartDto>? response = await client.GetFromJsonAsync<List<ReservationChartDto>>("api/Reservations/GetReservationStats", cancellationToken);
+
+        return View(response);
     }
 }
