@@ -4,6 +4,7 @@ using ApiProjeKampi.WebAPI.Entities;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace ApiProjeKampi.WebAPI.Controllers;
 
@@ -97,7 +98,7 @@ public class ReservationsController : ControllerBase
     {
         int totalReservations = await _context.Reservations.CountAsync(x => x.ReservationStatus == "Onay Bekliyor", cancellationToken);
 
-        return Ok(totalReservations);   
+        return Ok(totalReservations);
     }
 
     [HttpGet("GetApprovedReservation")]
@@ -106,5 +107,38 @@ public class ReservationsController : ControllerBase
         int totalReservations = await _context.Reservations.CountAsync(x => x.ReservationStatus == "Onaylandı", cancellationToken);
 
         return Ok(totalReservations);
+    }
+
+    [HttpGet("GetReservationStats")]
+    public async Task<IActionResult> GetReservationStats(CancellationToken cancellationToken = default)
+    {
+        DateOnly today = DateOnly.FromDateTime(DateTime.Today);
+        DateOnly fourMonthsAgo = today.AddMonths(-3);
+
+        // 1. SQL tarafında sadece gruplama ve veri çekme
+        var rawData = await _context.Reservations
+            .Where(r => r.ReservationDate >= fourMonthsAgo)
+            .GroupBy(r => new { r.ReservationDate.Year, r.ReservationDate.Month })
+            .Select(g => new
+            {
+                g.Key.Year,
+                g.Key.Month,
+                Approved = g.Count(x => x.ReservationStatus == "Onaylandı"),
+                Pending = g.Count(x => x.ReservationStatus == "Onay Bekliyor"),
+                Canceled = g.Count(x => x.ReservationStatus == "İptal Edildi")
+            })
+            .OrderBy(x => x.Year).ThenBy(x => x.Month)
+            .ToListAsync(cancellationToken); // Burada SQL biter, veriler RAM’e alınır
+
+        // 2. Bellekte DTO'ya mapleme + tarih formatlama
+        List<ReservationChartDto> result = rawData.Select(x => new ReservationChartDto
+        {
+            Month = new DateTime(x.Year, x.Month, 1).ToString("MMMM yyyy"),
+            Approved = x.Approved,
+            Pending = x.Pending,
+            Canceled = x.Canceled
+        }).ToList();
+
+        return Ok(result);
     }
 }
