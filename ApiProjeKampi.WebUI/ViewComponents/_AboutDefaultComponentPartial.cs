@@ -1,11 +1,23 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ApiProjeKampi.WebUI.Dtos.AboutDtos;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ApiProjeKampi.WebUI.ViewComponents;
 
 public class _AboutDefaultComponentPartial : ViewComponent
 {
-    public IViewComponentResult Invoke()
+    private readonly IHttpClientFactory _httpClientFactory;
+
+    public _AboutDefaultComponentPartial(IHttpClientFactory httpClientFactory)
     {
-        return View();
+        _httpClientFactory = httpClientFactory;
+    }
+
+    public async Task<IViewComponentResult> InvokeAsync()
+    {
+        HttpClient client = _httpClientFactory.CreateClient();
+
+        List<ResultAboutDto>? features = await client.GetFromJsonAsync<List<ResultAboutDto>>("https://localhost:7051/api/Abouts");
+
+        return View(features);
     }
 }

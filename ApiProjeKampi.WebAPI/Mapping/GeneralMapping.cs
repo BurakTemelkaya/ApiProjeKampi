@@ -1,5 +1,9 @@
 ﻿using ApiProjeKampi.WebAPI.Dtos.AboutDtos;
 using ApiProjeKampi.WebAPI.Dtos.CategoryDtos;
+using ApiProjeKampi.WebAPI.Dtos.ChefDtos;
+using ApiProjeKampi.WebAPI.Dtos.EmployeeTaskChefDtos;
+using ApiProjeKampi.WebAPI.Dtos.EmployeeTaskDtos;
+using ApiProjeKampi.WebAPI.Dtos.EmployeeTaskShefDtos;
 using ApiProjeKampi.WebAPI.Dtos.FeatureDtos;
 using ApiProjeKampi.WebAPI.Dtos.ImageDtos;
 using ApiProjeKampi.WebAPI.Dtos.MessageDtos;
@@ -54,5 +58,15 @@ public class GeneralMapping : Profile
         CreateMap<Image, CreateImageDto>().ReverseMap();
         CreateMap<Image, UpdateImageDto>().ReverseMap();
         CreateMap<Image, GetImageByIdDto>().ReverseMap();
+
+        CreateMap<EmployeeTask, GetEmployeeTaskByIdDto>().ReverseMap();
+        CreateMap<EmployeeTask, UpdateEmployeeTaskDto>().ReverseMap();
+        CreateMap<EmployeeTask, ResultEmployeeTaskDto>().ReverseMap();
+        CreateMap<EmployeeTask, CreateEmployeeTaskDto>().ReverseMap();
+
+        CreateMap<EmployeeTaskChef, CreateEmployeeTaskShefDto>().ReverseMap();
+        CreateMap<EmployeeTaskChef, ResultEmployeeTaskShefDto>().ReverseMap();
+
+        CreateMap<Chef, ResultChefDto>().ReverseMap();
     }
 }

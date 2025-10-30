@@ -24,4 +24,6 @@ public class ApiContext : DbContext
     public virtual DbSet<YummyEvent> YummyEvents { get; set; }
     public virtual DbSet<Notification> Notifications { get; set; }
     public virtual DbSet<About> Abouts { get; set; }
+    public virtual DbSet<EmployeeTask> EmployeeTasks { get; set; }
+    public virtual List<EmployeeTaskChef> EmployeeTaskChefs { get; set; }
 }
