@@ -21,7 +21,7 @@ public class AIController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateRecipeWithOpenAI(string prompt)
+    public async Task<IActionResult> CreateRecipeWithOpenAI(string prompt, CancellationToken cancellationToken = default)
     {
         string apiKey = _configuration["OpenRouterKey"];
 
@@ -44,17 +44,17 @@ public class AIController : Controller
             }
         };
 
-        HttpResponseMessage response = await client.PostAsJsonAsync("https://openrouter.ai/api/v1/chat/completions", requestData);
+        HttpResponseMessage response = await client.PostAsJsonAsync("https://openrouter.ai/api/v1/chat/completions", requestData, cancellationToken);
 
         if (response.IsSuccessStatusCode)
         {
-            var result = await response.Content.ReadFromJsonAsync<OpenAIResponse>();
+            var result = await response.Content.ReadFromJsonAsync<OpenAIResponse>(cancellationToken);
             var content = result.Choices[0].Message.Content;
             ViewBag.Recipe = content;
         }
         else
         {
-            ViewBag.Recipe = "Yapay zeka ile iletişimde bir hata oluştu." + await response.Content.ReadAsStringAsync();
+            ViewBag.Recipe = "Yapay zeka ile iletişimde bir hata oluştu." + await response.Content.ReadAsStringAsync(cancellationToken);
         }
 
         return View();

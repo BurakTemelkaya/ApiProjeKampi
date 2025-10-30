@@ -15,13 +15,13 @@ public class ChefController : Controller
         _httpClientFactory = httpClientFactory;
     }
 
-    public async Task<IActionResult> ChefList()
+    public async Task<IActionResult> ChefList(CancellationToken cancellationToken = default)
     {
         HttpClient client = _httpClientFactory.CreateClient();
-        HttpResponseMessage responseMessage = await client.GetAsync("https://localhost:7051/api/Chefs");
+        HttpResponseMessage responseMessage = await client.GetAsync("https://localhost:7051/api/Chefs", cancellationToken);
         if (responseMessage.IsSuccessStatusCode)
         {
-            List<ResultChefDto>? data = await responseMessage.Content.ReadFromJsonAsync<List<ResultChefDto>>();
+            List<ResultChefDto>? data = await responseMessage.Content.ReadFromJsonAsync<List<ResultChefDto>>(cancellationToken);
             return View(data);
         }
         return View();

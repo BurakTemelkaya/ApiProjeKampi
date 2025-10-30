@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Net.Http;
-using System.Threading.Tasks;
 
 namespace ApiProjeKampi.WebUI.Areas.Admin.ViewComponents.DashboardViewComponents;
 
@@ -13,25 +11,25 @@ public class _DashboardWidgestComponentPartial : ViewComponent
         _httpClientFactory = httpClientFactory;
     }
 
-    public async Task<IViewComponentResult> InvokeAsync()
+    public async Task<IViewComponentResult> InvokeAsync(CancellationToken cancellationToken = default)
     {
         HttpClient httpClient = _httpClientFactory.CreateClient();
 
-        HttpResponseMessage totalReservationResponse = await httpClient.GetAsync("https://localhost:7051/api/Reservations/GetTotalReservationCount");
+        HttpResponseMessage totalReservationResponse = await httpClient.GetAsync("https://localhost:7051/api/Reservations/GetTotalReservationCount", cancellationToken);
 
-        ViewBag.TotalReservationCount = await totalReservationResponse.Content.ReadAsStringAsync();
+        ViewBag.TotalReservationCount = await totalReservationResponse.Content.ReadAsStringAsync(cancellationToken);
 
-        HttpResponseMessage totalCustomerResponse = await httpClient.GetAsync("https://localhost:7051/api/Reservations/GetTotalCustomerCount");
+        HttpResponseMessage totalCustomerResponse = await httpClient.GetAsync("https://localhost:7051/api/Reservations/GetTotalCustomerCount", cancellationToken);
 
-        ViewBag.TotalCustomerCount = await totalCustomerResponse.Content.ReadAsStringAsync();
+        ViewBag.TotalCustomerCount = await totalCustomerResponse.Content.ReadAsStringAsync(cancellationToken);
 
-        HttpResponseMessage totalPendingResponse = await httpClient.GetAsync("https://localhost:7051/api/Reservations/GetPendingReservation");
+        HttpResponseMessage totalPendingResponse = await httpClient.GetAsync("https://localhost:7051/api/Reservations/GetPendingReservation", cancellationToken);
 
-        ViewBag.TotalPendingCount = await totalPendingResponse.Content.ReadAsStringAsync();
+        ViewBag.TotalPendingCount = await totalPendingResponse.Content.ReadAsStringAsync(cancellationToken);
 
-        HttpResponseMessage totalApprovedResponse = await httpClient.GetAsync("https://localhost:7051/api/Reservations/GetApprovedReservation");
+        HttpResponseMessage totalApprovedResponse = await httpClient.GetAsync("https://localhost:7051/api/Reservations/GetApprovedReservation", cancellationToken);
 
-        ViewBag.TotalApprovedCount = await totalApprovedResponse.Content.ReadAsStringAsync();
+        ViewBag.TotalApprovedCount = await totalApprovedResponse.Content.ReadAsStringAsync(cancellationToken);
 
         int r1, r2, r3, r4;
 

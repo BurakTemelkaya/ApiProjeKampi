@@ -14,13 +14,13 @@ public class AboutController : Controller
         _httpClientFactory = httpClientFactory;
     }
 
-    public async Task<IActionResult> AboutList()
+    public async Task<IActionResult> AboutList(CancellationToken cancellationToken = default)
     {
         HttpClient client = _httpClientFactory.CreateClient();
-        HttpResponseMessage responseMessage = await client.GetAsync("https://localhost:7051/api/Abouts");
+        HttpResponseMessage responseMessage = await client.GetAsync("https://localhost:7051/api/Abouts", cancellationToken);
         if (responseMessage.IsSuccessStatusCode)
         {
-            List<ResultAboutDto>? data = await responseMessage.Content.ReadFromJsonAsync<List<ResultAboutDto>>();
+            List<ResultAboutDto>? data = await responseMessage.Content.ReadFromJsonAsync<List<ResultAboutDto>>(cancellationToken);
             return View(data);
         }
         return View();

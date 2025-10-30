@@ -14,13 +14,13 @@ public class CategoryController : Controller
         _httpClientFactory = httpClientFactory;
     }
 
-    public async Task<IActionResult> CategoryList()
+    public async Task<IActionResult> CategoryList(CancellationToken cancellationToken = default)
     {
         HttpClient client = _httpClientFactory.CreateClient();
-        HttpResponseMessage responseMessage = await client.GetAsync("https://localhost:7051/api/Categories");
+        HttpResponseMessage responseMessage = await client.GetAsync("https://localhost:7051/api/Categories",cancellationToken);
         if (responseMessage.IsSuccessStatusCode)
         {
-            List<ResultCategoryDto>? data = await responseMessage.Content.ReadFromJsonAsync<List<ResultCategoryDto>>();
+            List<ResultCategoryDto>? data = await responseMessage.Content.ReadFromJsonAsync<List<ResultCategoryDto>>(cancellationToken);
             return View(data);
         }
         return View();

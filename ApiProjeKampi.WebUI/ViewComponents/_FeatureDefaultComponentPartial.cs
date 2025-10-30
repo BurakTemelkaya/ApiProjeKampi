@@ -13,11 +13,11 @@ public class _FeatureDefaultComponentPartial:ViewComponent
         _httpClientFactory = httpClientFactory;
     }
 
-    public async Task<IViewComponentResult> InvokeAsync()
+    public async Task<IViewComponentResult> InvokeAsync(CancellationToken cancellationToken = default)
     {
         HttpClient client = _httpClientFactory.CreateClient();
 
-        List<ResultFeatureDto>? features = await client.GetFromJsonAsync<List<ResultFeatureDto>>("https://localhost:7051/api/Features");
+        List<ResultFeatureDto>? features = await client.GetFromJsonAsync<List<ResultFeatureDto>>("https://localhost:7051/api/Features", cancellationToken);
 
         return View(features);
     }

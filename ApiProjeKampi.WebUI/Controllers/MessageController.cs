@@ -23,7 +23,7 @@ public class MessageController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> SendMessage(CreateMessageDto createMessageDto)
+    public async Task<IActionResult> SendMessage(CreateMessageDto createMessageDto,CancellationToken cancellationToken = default)
     {
         if (ModelState.IsValid)
         {
@@ -45,9 +45,9 @@ public class MessageController : Controller
                     inputs = createMessageDto.MessageDetails,
                 };
 
-                HttpResponseMessage translateResponse = await client.PostAsJsonAsync("https://router.huggingface.co/hf-inference/models/Helsinki-NLP/opus-mt-tr-en", translateRequestBody);
+                HttpResponseMessage translateResponse = await client.PostAsJsonAsync("https://router.huggingface.co/hf-inference/models/Helsinki-NLP/opus-mt-tr-en", translateRequestBody,cancellationToken);
 
-                var translateResponseString = await translateResponse.Content.ReadAsStringAsync();
+                var translateResponseString = await translateResponse.Content.ReadAsStringAsync(cancellationToken);
                     
                 string englishText = createMessageDto.MessageDetails;
 
@@ -62,9 +62,9 @@ public class MessageController : Controller
                     inputs = englishText,
                 };
 
-                HttpResponseMessage toxicityResponse = await client.PostAsJsonAsync("https://router.huggingface.co/hf-inference/models/unitary/toxic-bert", toxicityRequestBody);
+                HttpResponseMessage toxicityResponse = await client.PostAsJsonAsync("https://router.huggingface.co/hf-inference/models/unitary/toxic-bert", toxicityRequestBody, cancellationToken);
 
-                var toxicityResponseString = await toxicityResponse.Content.ReadAsStringAsync();
+                var toxicityResponseString = await toxicityResponse.Content.ReadAsStringAsync(cancellationToken);
 
                 if (toxicityResponseString.TrimStart().StartsWith("["))
                 {
@@ -93,7 +93,7 @@ public class MessageController : Controller
 
             HttpClient client2 = _httpClientFactory.CreateClient();
 
-            HttpResponseMessage responseMessage = await client2.PostAsJsonAsync("https://localhost:7051/api/Messages", createMessageDto);
+            HttpResponseMessage responseMessage = await client2.PostAsJsonAsync("https://localhost:7051/api/Messages", createMessageDto, cancellationToken);
 
             if (responseMessage.IsSuccessStatusCode)
             {

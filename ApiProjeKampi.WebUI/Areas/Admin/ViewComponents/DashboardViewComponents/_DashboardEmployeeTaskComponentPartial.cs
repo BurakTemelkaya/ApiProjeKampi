@@ -12,11 +12,11 @@ public class _DashboardEmployeeTaskComponentPartial : ViewComponent
         _httpClientFactory = httpClientFactory;
     }
 
-    public async Task<IViewComponentResult> InvokeAsync()
+    public async Task<IViewComponentResult> InvokeAsync(CancellationToken cancellationToken = default)
     {
-        var client = _httpClientFactory.CreateClient();
+        HttpClient client = _httpClientFactory.CreateClient();
 
-        var result = await client.GetFromJsonAsync<List<ResultEmployeeTaskDto>>("https://localhost:7051/api/EmployeeTasks");
+        List<ResultEmployeeTaskDto>? result = await client.GetFromJsonAsync<List<ResultEmployeeTaskDto>>("https://localhost:7051/api/EmployeeTasks", cancellationToken);
 
         return View(result);
     }
