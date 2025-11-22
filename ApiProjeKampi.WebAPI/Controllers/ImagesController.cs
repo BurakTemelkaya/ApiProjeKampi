@@ -2,7 +2,6 @@
 using ApiProjeKampi.WebAPI.Dtos.ImageDtos;
 using ApiProjeKampi.WebAPI.Entities;
 using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

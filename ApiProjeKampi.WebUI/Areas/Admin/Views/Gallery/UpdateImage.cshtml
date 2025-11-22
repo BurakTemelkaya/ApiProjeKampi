@@ -1,18 +1,19 @@
 ﻿
 @{
-    ViewData["Title"] = "CreateImage";
+    ViewData["Title"] = "UpdateImage";
     Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
 }
 
-@model CreateImageDto
+@model GetImageByIdDto
 
 <div class="row">
     <div class="col-12 col-md-12 col-lg-12">
         <div class="card">
             <div class="card-body">
-                <h4>Görsel Ekleme Sayfası</h4>
+                <h4>Görsel Düzenleme Sayfası</h4>
 
                 <form method="post">
+                    <input type="hidden" asp-for="ImageId"/>
                     <div class="form-group">
                         <label>Görsel Başlığı</label>
                         <input type="text" asp-for="Title" class="form-control" />
@@ -23,7 +24,7 @@
                         <input type="text" asp-for="ImageUrl" class="form-control" />
                     </div>
 
-                    <button type="submit" class="btn btn-primary mt-3">Görsel Ekle</button>
+                    <button type="submit" class="btn btn-success mt-3">Görseli Güncelle</button>
                 </form>
             </div>
         </div>

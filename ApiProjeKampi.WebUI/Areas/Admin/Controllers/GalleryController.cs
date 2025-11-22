@@ -27,6 +27,18 @@ public class GalleryController : Controller
         return View();
     }
 
+    public async Task<IActionResult> ImageListWithEdit()
+    {
+        HttpClient client = _httpClientFactory.CreateClient();
+        HttpResponseMessage responseMessage = await client.GetAsync("https://localhost:7051/api/Images");
+        if (responseMessage.IsSuccessStatusCode)
+        {
+            List<ResultImageDto>? data = await responseMessage.Content.ReadFromJsonAsync<List<ResultImageDto>>();
+            return View(data);
+        }
+        return View();
+    }
+
     [HttpGet]
     public IActionResult CreateImage()
     {
@@ -44,7 +56,7 @@ public class GalleryController : Controller
 
             if (responseMessage.IsSuccessStatusCode)
             {
-                return RedirectToAction("ImageList");
+                return RedirectToAction(nameof(ImageListWithEdit));
             }
         }
         return View(createImageDto);
@@ -55,7 +67,7 @@ public class GalleryController : Controller
         HttpClient client = _httpClientFactory.CreateClient();
         HttpResponseMessage responseMessage = await client.DeleteAsync($"https://localhost:7051/api/Images/{id}");
 
-        return RedirectToAction("ImageList");
+        return RedirectToAction(nameof(ImageListWithEdit));
     }
 
     [HttpGet]
@@ -80,7 +92,7 @@ public class GalleryController : Controller
             HttpResponseMessage responseMessage = await client.PutAsJsonAsync("https://localhost:7051/api/Images", updateImageDto);
             if (responseMessage.IsSuccessStatusCode)
             {
-                return RedirectToAction("ImageList");
+                return RedirectToAction(nameof(ImageListWithEdit));
             }
         }
         return View(updateImageDto);
