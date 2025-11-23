@@ -23,7 +23,7 @@ public class MessageController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> SendMessage(CreateMessageDto createMessageDto,CancellationToken cancellationToken = default)
+    public async Task<IActionResult> SendMessage(CreateMessageDto createMessageDto, CancellationToken cancellationToken = default)
     {
         if (ModelState.IsValid)
         {
@@ -45,10 +45,10 @@ public class MessageController : Controller
                     inputs = createMessageDto.MessageDetails,
                 };
 
-                HttpResponseMessage translateResponse = await client.PostAsJsonAsync("https://router.huggingface.co/hf-inference/models/Helsinki-NLP/opus-mt-tr-en", translateRequestBody,cancellationToken);
+                HttpResponseMessage translateResponse = await client.PostAsJsonAsync("https://router.huggingface.co/hf-inference/models/Helsinki-NLP/opus-mt-tr-en", translateRequestBody, cancellationToken);
 
                 var translateResponseString = await translateResponse.Content.ReadAsStringAsync(cancellationToken);
-                    
+
                 string englishText = createMessageDto.MessageDetails;
 
                 if (translateResponseString.TrimStart().StartsWith("["))
@@ -101,5 +101,5 @@ public class MessageController : Controller
             }
         }
         return BadRequest("Mesaj gönderimi sırasında bir hata oluştu lütfen daha sonra tekrar deneyiniz.");
-    }   
+    }
 }
