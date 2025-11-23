@@ -1,4 +1,4 @@
-﻿namespace ApiProjeKampi.WebUI.Dtos.GroupReservationDtos;
+﻿namespace ApiProjeKampi.WebAPI.Dtos.GroupReservationDtos;
 
 public class ResultGroupReservationDto
 {

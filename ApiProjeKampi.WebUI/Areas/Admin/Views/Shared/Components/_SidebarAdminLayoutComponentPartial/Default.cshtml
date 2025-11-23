@@ -9,7 +9,8 @@
             <li class="dropdown">
                 <a asp-action="Index" asp-controller="Default" class="nav-link"><i data-feather="home"></i><span>Siteye Yönlendir</span></a>
 
-                <a href="index.html" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
+
+                <a asp-action="Index" asp-controller="Dashboard" asp-area="@AreaNames.Admin" class="nav-link"><i data-feather="briefcase"></i><span>Dashboard</span></a>
 
                 <a asp-action="CategoryList" asp-controller="Category" asp-area="@AreaNames.Admin" class="nav-link"><i data-feather="briefcase"></i><span>Kategoriler</span></a>
 

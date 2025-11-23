@@ -35,7 +35,8 @@
                             <th>Öncelik</th>
                             <th>Detaylar</th>
                         </tr>
-
+                        @foreach (ResultGroupReservationDto groupReservation in Model)
+                        {
                             <tr>
                                 <td class="p-0 text-center">
                                     <div class="custom-checkbox custom-control">
@@ -44,35 +45,22 @@
                                         <label for="checkbox-1" class="custom-control-label">&nbsp;</label>
                                     </div>
                                 </td>
-                                <td></td>
-                                <td class="text-truncate">
-                                    <ul class="list-unstyled order-list m-b-0 m-b-0">
-
-                                            <li class="team-member team-member-sm">
-                                                <img class="rounded-circle"
-                                                     src="" alt="user" data-toggle="tooltip" title=""
-                                                     data-original-title="">
-                                            </li>
-                                        
-                                        <li class="avatar avatar-sm"><span class="badge badge-primary">+</span></li>
-                                    </ul>
-                                </td>
+                                <td>@groupReservation.GroupTitle</td>
+                                <td>@groupReservation.ResponsibleCustomerName</td>
                                 <td class="align-middle">
-                                    <div class="progress-text"></div>
+                                    <div class="progress-text">@groupReservation.ReservationStatus</div>
                                     <div class="progress" data-height="6">
-                                        <div class="progress-bar bg-success" data-width=""></div>
+                                        <div class="progress-bar bg-success" data-width="100%"></div>
                                     </div>
                                 </td>
-                                <td></td>
-                                <td></td>
+                                <td>@groupReservation.LastProcessDate.ToShortDateString()</td>
+                                <td>@groupReservation.ReservationDate.ToShortDateString()</td>
                                 <td>
-                                    <div class="badge badge-success"></div>
+                                    <div class="badge badge-success">@groupReservation.Priority</div>
                                 </td>
-                                <td><a href="#" class="btn btn-outline-primary">İşlemler</a></td>
+                                <td><a href="#" class="btn btn-outline-primary">Detaylar</a></td>
                             </tr>
-                        
-
-
+                        }
                     </table>
                 </div>
             </div>
