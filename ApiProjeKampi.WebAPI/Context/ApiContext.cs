@@ -3,14 +3,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ApiProjeKampi.WebAPI.Context;
 
-public class ApiContext : DbContext
+public class ApiContext(DbContextOptions<ApiContext> options) : DbContext(options)
 {
-
-    public ApiContext(DbContextOptions<ApiContext> options) : base(options)
-    {
-
-    }
-
     public virtual DbSet<Category> Categories { get; set; }
     public virtual DbSet<Chef> Chefs { get; set; }
     public virtual DbSet<Contact> Contacts { get; set; }
@@ -25,5 +19,6 @@ public class ApiContext : DbContext
     public virtual DbSet<Notification> Notifications { get; set; }
     public virtual DbSet<About> Abouts { get; set; }
     public virtual DbSet<EmployeeTask> EmployeeTasks { get; set; }
-    public virtual List<EmployeeTaskChef> EmployeeTaskChefs { get; set; }
+    public virtual DbSet<EmployeeTaskChef> EmployeeTaskChefs { get; set; }
+    public virtual DbSet<GroupReservation> GroupReservations { get; set; }
 }

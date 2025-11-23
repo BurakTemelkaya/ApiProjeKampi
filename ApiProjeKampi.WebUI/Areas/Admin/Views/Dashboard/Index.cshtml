@@ -46,7 +46,9 @@
     </div>
 </div>
 
-@await Component.InvokeAsync("_DashboardEmployeeTaskComponentPartial")
+@*@await Component.InvokeAsync("_DashboardEmployeeTaskComponentPartial")*@
+
+@await Component.InvokeAsync("_DashboardGroupReservationComponentPartial")
 
 
 <div class="row">
@@ -222,4 +224,3 @@
     <!-- Page Specific JS File -->
     <script src="~/otika-bootstrap-admin-template/assets/js/page/index.js"></script>
 }
-
