@@ -7,7 +7,9 @@ public class ResultGroupReservationDto
     public string GroupTitle { get; set; }
     public DateTime ReservationDate { get; set; }
     public DateTime LastProcessDate { get; set; }
-    public string Priority { get; set; }
+    public GroupReservationPriorityEnum Priority { get; set; }
     public string Details { get; set; }
     public string ReservationStatus { get; set; }
+    public int PersonCount { get; set; }
+    public string Email { get; set; }
 }

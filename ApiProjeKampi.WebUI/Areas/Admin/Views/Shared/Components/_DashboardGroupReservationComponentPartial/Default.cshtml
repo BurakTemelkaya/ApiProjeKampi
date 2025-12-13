@@ -2,68 +2,108 @@
 
 <div class="row">
     <div class="col-12">
-        <div class="card">
-            <div class="card-header">
-                <h4>Grup Rezervasyonları</h4>
-                <div class="card-header-form">
-                    <form>
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Aranacak Rezervasyon">
-                            <div class="input-group-btn">
-                                <button class="btn btn-primary"><i class="fas fa-search"></i></button>
-                            </div>
-                        </div>
-                    </form>
+        <div class="card shadow-sm border-0 rounded-4">
+            <div class="card-header d-flex justify-content-between align-items-center bg-white py-3">
+                <h4 class="fw-bold mb-0">Grup Rezervasyonları</h4>
+
+                <div class="position-relative">
+                    <input type="text" class="form-control rounded-pill ps-4"
+                           placeholder="Rezervasyon ara...">
+                    <i class="fas fa-search position-absolute top-50 end-0 translate-middle-y me-3 text-muted"></i>
                 </div>
             </div>
+
             <div class="card-body p-0">
                 <div class="table-responsive">
-                    <table class="table table-striped">
-                        <tr>
-                            <th class="text-center">
-                                <div class="custom-checkbox custom-checkbox-table custom-control">
-                                    <input type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad"
-                                           class="custom-control-input" id="checkbox-all">
-                                    <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
-                                </div>
-                            </th>
-                            <th>Grup Başlığı</th>
-                            <th>Yetkili Kişi</th>
-                            <th>Rezervasyon Durumu</th>
-                            <th>Talep Tarihi</th>
-                            <th>Son İşlem Tarihi</th>
-                            <th>Öncelik</th>
-                            <th>Detaylar</th>
-                        </tr>
-                        @foreach (ResultGroupReservationDto groupReservation in Model)
-                        {
+                    <table class="table align-middle table-hover mb-0">
+                        <thead class="bg-light">
                             <tr>
-                                <td class="p-0 text-center">
-                                    <div class="custom-checkbox custom-control">
-                                        <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input"
-                                               id="checkbox-1">
-                                        <label for="checkbox-1" class="custom-control-label">&nbsp;</label>
-                                    </div>
-                                </td>
-                                <td>@groupReservation.GroupTitle</td>
-                                <td>@groupReservation.ResponsibleCustomerName</td>
-                                <td class="align-middle">
-                                    <div class="progress-text">@groupReservation.ReservationStatus</div>
-                                    <div class="progress" data-height="6">
-                                        <div class="progress-bar bg-success" data-width="100%"></div>
-                                    </div>
-                                </td>
-                                <td>@groupReservation.LastProcessDate.ToShortDateString()</td>
-                                <td>@groupReservation.ReservationDate.ToShortDateString()</td>
-                                <td>
-                                    <div class="badge badge-success">@groupReservation.Priority</div>
-                                </td>
-                                <td><a href="#" class="btn btn-outline-primary">Detaylar</a></td>
+                                <th class="text-center" style="width:40px;">
+                                    <input type="checkbox" />
+                                </th>
+                                <th>Grup Başlığı</th>
+                                <th>Yetkili Kişi</th>
+                                <th>Durum</th>
+                                <th>Kişi</th>
+                                <th>Son İşlem</th>
+                                <th>Rezervasyon</th>
+                                <th>Öncelik</th>
+                                <th></th>
                             </tr>
-                        }
+                        </thead>
+
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                string statusClass = item.ReservationStatus switch
+                                {
+                                    "Pending" => "badge-warning",
+                                    "Approved" => "badge-success",
+                                    "Cancelled" => "badge-danger",
+                                    _ => "badge-secondary"
+                                };
+
+                                string priorityClass = item.Priority switch
+                                {
+                                    GroupReservationPriorityEnum.High => "badge-danger",
+                                    GroupReservationPriorityEnum.Medium=> "badge-warning",
+                                    GroupReservationPriorityEnum.Low => "badge-success",
+                                    _ => "badge-primary"
+                                };
+
+                                <tr class="table-row-modern">
+                                    <td class="text-center">
+                                        <input type="checkbox" />
+                                    </td>
+
+                                    <td class="fw-semibold">@item.GroupTitle</td>
+
+                                    <td>@item.ResponsibleCustomerName</td>
+
+                                    <td>
+                                        <span class="badge @statusClass px-3 py-2 rounded-pill">
+                                            @item.ReservationStatus
+                                        </span>
+                                    </td>
+
+                                    <td class="fw-bold">@item.PersonCount</td>
+
+                                    <td>@item.LastProcessDate.ToString("dd-MMM-yyyy")</td>
+
+                                    <td>@item.ReservationDate.ToString("dd-MMM-yyyy")</td>
+
+                                    <td>
+                                        <span class="badge @priorityClass px-3 py-2 rounded-pill">
+                                            @item.Priority
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        <a href="#" class="btn btn-outline-primary btn-sm rounded-pill px-3">
+                                            Detaylar
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<style>
+    .table-row-modern:hover {
+        background-color: #f8f9fa !important;
+        transition: 0.2s ease-in-out;
+    }
+
+    .badge {
+        font-size: 0.75rem;
+    }
+
+    .rounded-4 {
+        border-radius: 1rem !important;
+    }
+</style>
