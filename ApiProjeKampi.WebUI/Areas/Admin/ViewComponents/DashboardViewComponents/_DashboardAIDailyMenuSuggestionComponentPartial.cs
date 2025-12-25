@@ -20,11 +20,11 @@ public class _DashboardAIDailyMenuSuggestionComponentPartial : ViewComponent
     public _DashboardAIDailyMenuSuggestionComponentPartial(IConfiguration configuration, IHttpClientFactory httpClientFactory)
     {
         _configuration = configuration;
-        _openRouterApiKey = _configuration["OpenRouterKey"];
+        _openRouterApiKey = _configuration["OpenRouterKey"]!;
         _httpClientFactory = httpClientFactory;
     }
 
-    public async Task<IViewComponentResult> InvokeAsync()
+    public async Task<IViewComponentResult> InvokeAsync(CancellationToken cancellationToken)
     {
         var openAiClient = _httpClientFactory.CreateClient();
         openAiClient.BaseAddress = new Uri("https://openrouter.ai/api/");
@@ -32,11 +32,12 @@ public class _DashboardAIDailyMenuSuggestionComponentPartial : ViewComponent
             new AuthenticationHeaderValue("Bearer", _openRouterApiKey);
 
         string prompt = @"
-4 farklı dünya mutfağından rastgele günlük menü üret.
+4 farklı dünya mutfağından rastgele günlük menü üret. Burada ülke isimleri aşağıda verilecektir.
 
 Kurallar:
-- Mutlaka 4 farklı ülke mutfağı seç.
+- Mutlaka aşağıda verdiğim 4 farklı ülke mutfağı seç.
 - Tüm içerik TÜRKÇE olsun.
+- Seçim yapacağın ülkeler: Türkiye, Fransa, Almanya, İtalya, Portekiz, Bulgaristan, Gürcistan, Yunanistan, İran, Çin.
 - Her ülke için 4 yemek yaz (çorba, ana yemek, yan yemek, tatlı).
 - Yemek açıklamaları Türkçe olsun.
 - Fiyatları TL cinsinden ver.
@@ -74,8 +75,8 @@ JSON formatı TAM OLARAK şöyle olsun:
         var jsonBody = JsonConvert.SerializeObject(body);
         var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
 
-        var response = await openAiClient.PostAsync("v1/chat/completions", content);
-        var responseJson = await response.Content.ReadAsStringAsync();
+        var response = await openAiClient.PostAsync("v1/chat/completions", content, cancellationToken);
+        var responseJson = await response.Content.ReadAsStringAsync(cancellationToken);
 
         dynamic obj = JsonConvert.DeserializeObject(responseJson);
         string aiContent = obj.choices[0].message.content.ToString();
@@ -92,20 +93,5 @@ JSON formatı TAM OLARAK şöyle olsun:
         }
 
         return View(menus);
-    }
-
-    public async Task<List<ResultProductDto>> GetProductsAsync()
-    {
-        HttpClient client = _httpClientFactory.CreateClient();
-
-        HttpResponseMessage response = await client.GetAsync("https://localhost:7231/api/products/ProductListWithCategory");
-
-        if (response.IsSuccessStatusCode)
-        {
-            List<ResultProductDto>? products = await response.Content.ReadFromJsonAsync<List<ResultProductDto>>();
-            return products ?? [];
-        }
-
-        return [];
     }
 }
